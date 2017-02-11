@@ -9,10 +9,8 @@ RUN apt-get -qq update && \
     apt-get -qq clean
 
 RUN useradd --password ubuntu -G sudo ubuntu && \
-    echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/90-ubuntu
-
-RUN mkdir /var/run/sshd && \
-    sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+    echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/90-ubuntu && \
+    mkdir /var/run/sshd
 
 EXPOSE 22
 
