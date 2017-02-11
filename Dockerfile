@@ -8,7 +8,7 @@ RUN apt-get -qq update && \
     apt-get -qq install -y sudo && \
     apt-get -qq clean
 
-RUN useradd -m -G sudo ubuntu && \
+RUN useradd -m -G sudo -s /bin/bash ubuntu && \
     echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/90-ubuntu && \
     echo "ubuntu:ubuntu" | chpasswd && \
     mkdir /var/run/sshd
