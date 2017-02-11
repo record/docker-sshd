@@ -8,8 +8,9 @@ RUN apt-get -qq update && \
     apt-get -qq install -y sudo && \
     apt-get -qq clean
 
-RUN useradd --password ubuntu -G sudo ubuntu && \
+RUN useradd -G sudo ubuntu && \
     echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/90-ubuntu && \
+    echo "ubuntu:ubuntu" | chpasswd && \
     mkdir /var/run/sshd
 
 EXPOSE 22
