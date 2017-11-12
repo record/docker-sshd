@@ -1,17 +1,19 @@
-FROM ubuntu:16.04
+FROM alpine:3.6
 
-RUN apt-get -qq update && \
-    apt-get -qq install -y openssh-server && \
-    apt-get -qq clean
+RUN apk add --no-cache \
+        bash \
+        bash-completion \
+        openssh \
+        sudo \
+    && true
 
-RUN apt-get -qq update && \
-    apt-get -qq install -y sudo && \
-    apt-get -qq clean
-
-RUN useradd -m -G sudo -s /bin/bash ubuntu && \
+RUN adduser \
+        -D \
+        -s /bin/bash \
+        ubuntu && \
     echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/90-ubuntu && \
-    echo "ubuntu:ubuntu" | chpasswd && \
-    mkdir /var/run/sshd
+    (echo "ubuntu:ubuntu" | chpasswd) && \
+    ssh-keygen -A
 
 EXPOSE 22
 
